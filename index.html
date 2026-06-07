@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tri V AI Construction Command Center — Proposal</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #1a3a5c;
+      --accent: #e8a020;
+      --accent2: #2e7d32;
+      --light: #f4f6f9;
+      --text: #1c1c1e;
+      --muted: #6b7280;
+      --border: #e2e8f0;
+      --red: #dc2626;
+      --yellow: #d97706;
+      --green: #16a34a;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: #fff;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* ── COVER PAGE ── */
+    .cover {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #0f2744 0%, #1a3a5c 50%, #0d1f35 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 60px;
+      page-break-after: always;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(232,160,32,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cover-top { display: flex; justify-content: space-between; align-items: flex-start; }
+
+    .cover-logo {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .cover-badge {
+      background: rgba(232,160,32,0.15);
+      border: 1px solid rgba(232,160,32,0.4);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+    }
+
+    .cover-main { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 80px 0 60px; }
+
+    .cover-tag {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(232,160,32,0.8);
+      margin-bottom: 20px;
+    }
+
+    .cover-title {
+      font-size: 52px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    .cover-title span { color: var(--accent); }
+
+    .cover-subtitle {
+      font-size: 20px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 40px;
+    }
+
+    .cover-divider {
+      width: 60px; height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 40px;
+    }
+
+    .cover-desc {
+      font-size: 15px;
+      color: rgba(255,255,255,0.75);
+      max-width: 520px;
+      line-height: 1.7;
+    }
+
+    .cover-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 30px;
+    }
+
+    .cover-client { }
+    .cover-client-label { font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+    .cover-client-name { font-size: 18px; font-weight: 700; color: #fff; }
+    .cover-client-company { font-size: 13px; color: rgba(255,255,255,0.5); }
+
+    .cover-builder { text-align: right; }
+    .cover-builder-label { font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+    .cover-builder-name { font-size: 15px; font-weight: 700; color: #fff; }
+    .cover-builder-title { font-size: 12px; color: rgba(255,255,255,0.5); }
+
+    /* ── CONTENT PAGES ── */
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 60px;
+    }
+
+    .page-break { page-break-before: always; }
+
+    /* Section headers */
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .section-intro {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 36px;
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    .divider { width: 40px; height: 3px; background: var(--accent); border-radius: 2px; margin: 12px 0 28px; }
+
+    /* ── PROBLEM SECTION ── */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .problem-card {
+      background: #fff5f5;
+      border: 1px solid #fecaca;
+      border-left: 4px solid var(--red);
+      border-radius: 8px;
+      padding: 18px 20px;
+    }
+
+    .problem-card h4 { font-size: 13px; font-weight: 700; color: var(--red); margin-bottom: 6px; }
+    .problem-card p { font-size: 13px; color: #374151; line-height: 1.5; }
+
+    /* ── SOLUTION SUMMARY ── */
+    .solution-box {
+      background: linear-gradient(135deg, #0f2744, #1a3a5c);
+      border-radius: 12px;
+      padding: 36px 40px;
+      margin: 28px 0;
+      color: #fff;
+    }
+
+    .solution-box h3 { color: var(--accent); font-size: 18px; margin-bottom: 12px; }
+    .solution-box p { color: rgba(255,255,255,0.8); font-size: 14px; line-height: 1.7; }
+
+    .solution-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .stat-box {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat-number { font-size: 28px; font-weight: 800; color: var(--accent); }
+    .stat-label { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 4px; line-height: 1.3; }
+
+    /* ── MODULES ── */
+    .module {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .module-header {
+      background: var(--light);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .module-letter {
+      width: 32px; height: 32px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 800;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .module-title { font-size: 14px; font-weight: 700; color: var(--primary); }
+    .module-subtitle { font-size: 12px; color: var(--muted); margin-top: 1px; }
+
+    .module-body { padding: 16px 20px; }
+
+    .tracks-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px 20px;
+      margin-bottom: 14px;
+    }
+
+    .track-item {
+      font-size: 12px;
+      color: #374151;
+      padding: 3px 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .track-item::before {
+      content: '▸';
+      color: var(--primary);
+      font-size: 10px;
+      flex-shrink: 0;
+    }
+
+    .ai-quote {
+      background: linear-gradient(135deg, #eff6ff, #dbeafe);
+      border-left: 3px solid #3b82f6;
+      border-radius: 0 6px 6px 0;
+      padding: 10px 14px;
+      margin-top: 10px;
+    }
+
+    .ai-quote-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; color: #3b82f6; text-transform: uppercase; margin-bottom: 4px; }
+    .ai-quote p { font-size: 12px; color: #1e40af; font-style: italic; line-height: 1.5; }
+
+    /* ── FLOW ── */
+    .flow-row {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 28px 0;
+      flex-wrap: wrap;
+    }
+
+    .flow-step {
+      background: var(--primary);
+      color: #fff;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      text-align: center;
+      min-width: 100px;
+      line-height: 1.4;
+    }
+
+    .flow-step span { display: block; font-size: 10px; font-weight: 400; color: rgba(255,255,255,0.6); margin-top: 2px; }
+
+    .flow-arrow {
+      color: var(--accent);
+      font-size: 20px;
+      padding: 0 8px;
+      font-weight: 700;
+    }
+
+    /* ── DASHBOARD PREVIEW ── */
+    .dashboard-preview {
+      background: #0f172a;
+      border-radius: 10px;
+      padding: 24px;
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      color: #94a3b8;
+      margin: 20px 0;
+      line-height: 1.6;
+    }
+
+    .dp-title { color: #f1f5f9; font-weight: 700; font-size: 12px; margin-bottom: 12px; letter-spacing: 1px; }
+    .dp-row { display: flex; gap: 12px; margin-bottom: 12px; }
+    .dp-card { background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 10px 14px; flex: 1; }
+    .dp-card-num { font-size: 22px; font-weight: 700; color: #f1f5f9; }
+    .dp-card-label { font-size: 10px; color: #64748b; margin-top: 2px; }
+    .dp-card.red .dp-card-num { color: #f87171; }
+    .dp-card.yellow .dp-card-num { color: #fbbf24; }
+    .dp-card.green .dp-card-num { color: #4ade80; }
+    .dp-card.blue .dp-card-num { color: #60a5fa; }
+    .dp-ai { background: #1e293b; border: 1px solid #334155; border-left: 3px solid #fbbf24; border-radius: 0 6px 6px 0; padding: 10px 14px; margin-bottom: 12px; }
+    .dp-ai-label { font-size: 10px; color: #fbbf24; font-weight: 700; margin-bottom: 4px; }
+    .dp-ai p { color: #cbd5e1; font-size: 11px; }
+    .dp-list { background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 10px 14px; }
+    .dp-list-title { font-size: 10px; color: #64748b; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+    .dp-item { padding: 5px 0; border-bottom: 1px solid #334155; font-size: 11px; color: #cbd5e1; display: flex; align-items: center; gap: 8px; }
+    .dp-item:last-child { border-bottom: none; }
+
+    /* ── TIMELINE ── */
+    .timeline { margin: 24px 0; }
+
+    .timeline-row {
+      display: flex;
+      gap: 0;
+      margin-bottom: 2px;
+    }
+
+    .tl-week {
+      width: 80px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary);
+      padding: 10px 0;
+      flex-shrink: 0;
+    }
+
+    .tl-bar {
+      flex: 1;
+      background: var(--light);
+      border-radius: 4px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #374151;
+      margin-bottom: 2px;
+      border-left: 3px solid var(--primary);
+    }
+
+    .tl-bar.accent { border-left-color: var(--accent); background: #fffbeb; }
+    .tl-bar.green { border-left-color: var(--green); background: #f0fdf4; }
+
+    /* ── TOOLS COST ── */
+    .tools-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    .tools-table th {
+      background: var(--primary);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 10px 14px;
+      text-align: left;
+    }
+
+    .tools-table td {
+      padding: 10px 14px;
+      font-size: 13px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tools-table tr:last-child td { border-bottom: none; }
+    .tools-table tr:nth-child(even) td { background: var(--light); }
+
+    .tools-table .free { color: var(--green); font-weight: 600; }
+    .tools-table .paid { color: var(--primary); font-weight: 600; }
+    .tools-table .total-row td { font-weight: 700; background: #fffbeb; color: var(--primary); border-top: 2px solid var(--accent); }
+
+    .note-box {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-left: 3px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 16px;
+      font-size: 12px;
+      color: #92400e;
+      margin: 16px 0;
+      line-height: 1.6;
+    }
+
+    /* ── SERVICE ── */
+    .service-box {
+      background: var(--light);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 28px 32px;
+      margin: 20px 0;
+    }
+
+    .service-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    .service-item:last-child { border-bottom: none; }
+    .service-item-name { color: var(--text); font-weight: 500; }
+    .service-item-price { font-weight: 700; color: var(--primary); }
+    .service-item-price.tbd {
+      background: var(--primary);
+      color: #fff;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+
+    /* ── NEXT STEPS ── */
+    .steps-list { margin: 20px 0; }
+
+    .step-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      width: 32px; height: 32px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 14px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 { font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 3px; }
+    .step-content p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--primary);
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      padding: 24px 40px;
+      font-size: 11px;
+      margin-top: 60px;
+    }
+
+    .footer strong { color: #fff; }
+
+    /* Print */
+    @media print {
+      .cover { page-break-after: always; }
+      .page-break { page-break-before: always; }
+      body { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     COVER PAGE
+════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-top">
+    <div class="cover-logo">Tri V Development Corporation</div>
+    <div class="cover-badge">PROPOSAL · 2026</div>
+  </div>
+
+  <div class="cover-main">
+    <div class="cover-tag">AI-Powered Construction Technology</div>
+    <div class="cover-title">
+      AI Construction<br/><span>Command Center</span>
+    </div>
+    <div class="cover-subtitle">Project Monitoring & Intelligence System</div>
+    <div class="cover-divider"></div>
+    <p class="cover-desc">
+      A CEO-focused platform that tracks costs, schedules, delays, procurement, and daily site reports — with AI that detects problems early, compares reported progress against evidence, and gives you clear recommended actions every morning.
+    </p>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="cover-client">
+      <div class="cover-client-label">Prepared For</div>
+      <div class="cover-client-name">Marvin Bryan K. Verar</div>
+      <div class="cover-client-company">Tri V Development Corporation · Manila</div>
+    </div>
+    <div class="cover-builder">
+      <div class="cover-builder-label">Prepared By</div>
+      <div class="cover-builder-name">Vladimir Napigkit</div>
+      <div class="cover-builder-title">IT Architect · AI Automation Specialist</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE 1: PROBLEM + SOLUTION
+════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-label">The Problem</div>
+  <h2>What Construction CEOs Face Today</h2>
+  <div class="divider"></div>
+  <p class="section-intro">Without a centralized system, critical project information is scattered — making it hard for a CEO to act before problems become crises.</p>
+
+  <div class="problem-grid">
+    <div class="problem-card">
+      <h4>No Single Source of Truth</h4>
+      <p>Project updates come through Viber, WhatsApp, and verbal reports. There is no reliable place to check project status at any time.</p>
+    </div>
+    <div class="problem-card">
+      <h4>Hidden Cost Overruns</h4>
+      <p>Engineers report "ongoing" work while the budget is quietly overrunning. By the time the CEO notices, it is too late to correct.</p>
+    </div>
+    <div class="problem-card">
+      <h4>Delays Caught Too Late</h4>
+      <p>Small delays accumulate into major schedule failures. There is no early warning system to catch the pattern before it compounds.</p>
+    </div>
+    <div class="problem-card">
+      <h4>No Remote Monitoring</h4>
+      <p>The CEO must physically visit sites or wait for reports. There is no way to monitor all active projects from a phone or laptop.</p>
+    </div>
+    <div class="problem-card">
+      <h4>Approval Bottlenecks</h4>
+      <p>Purchase orders, billings, and change orders wait for the CEO to be physically present — slowing down procurement and site progress.</p>
+    </div>
+    <div class="problem-card">
+      <h4>Unverified Reports</h4>
+      <p>Engineers can report higher completion percentages than the actual site shows. There is no system to cross-check claims against evidence.</p>
+    </div>
+  </div>
+
+  <div class="solution-box" style="margin-top:40px;">
+    <h3>The Solution: AI Construction Command Center</h3>
+    <p>A web-based platform where engineers submit structured daily reports from their phones, all project data is centralized in one database, and an AI engine analyzes everything automatically — surfacing risks, predicting delays, detecting budget overruns, and delivering a clear morning briefing to the CEO every day.</p>
+
+    <div class="solution-stats">
+      <div class="stat-box">
+        <div class="stat-number">8</div>
+        <div class="stat-label">System Modules</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">5</div>
+        <div class="stat-label">Weeks to Launch</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">24/7</div>
+        <div class="stat-label">AI Monitoring</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Remote Access</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE 2: SYSTEM MODULES
+════════════════════════════════════════ -->
+<div class="page page-break">
+  <div class="section-label">System Modules</div>
+  <h2>What the System Tracks</h2>
+  <div class="divider"></div>
+  <p class="section-intro">Eight integrated modules cover every aspect of project monitoring — from daily site reports to CEO approvals — with AI analysis built into each one.</p>
+
+  <!-- Module A -->
+  <div class="module">
+    <div class="module-header">
+      <div class="module-letter">A</div>
+      <div>
+        <div class="module-title">Cost Control</div>
+        <div class="module-subtitle">Budget vs. actual cost tracking with overrun detection</div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="tracks-grid">
+        <div class="track-item">Original Budget</div>
+        <div class="track-item">Revised Budget</div>
+        <div class="track-item">Actual Cost to Date</div>
+        <div class="track-item">Committed Cost</div>
+        <div class="track-item">Remaining Budget</div>
+        <div class="track-item">Purchase Requests</div>
+        <div class="track-item">Subcontractor Billing</div>
+        <div class="track-item">Change Orders</div>
+        <div class="track-item">Cost per % Completion</div>
+      </div>
+      <div class="ai-quote">
+        <div class="ai-quote-label">AI Output Example</div>
+        <p>"This project is 42% complete but has already used 58% of the budget. At the current burn rate, projected final cost exceeds the budget by ₱380,000. Immediate review of labor and material costs is recommended."</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Module B -->
+  <div class="module">
+    <div class="module-header">
+      <div class="module-letter">B</div>
+      <div>
+        <div class="module-title">Schedule & Delay Monitoring</div>
+        <div class="module-subtitle">Baseline vs. actual progress with AI delay prediction</div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="tracks-grid">
+        <div class="track-item">Baseline Schedule</div>
+        <div class="track-item">Actual Progress %</div>
+        <div class="track-item">Planned Start & Finish</div>
+        <div class="track-item">Actual Start & Finish</div>
+        <div class="track-item">Target Completion Date</div>
+        <div class="track-item">Delay Days (auto-calculated)</div>
+        <div class="track-item">Delay Reason</div>
+        <div class="track-item">Responsible Person</div>
+        <div class="track-item">Recovery Plan</div>
+      </div>
+      <div class="ai-quote">
+        <div class="ai-quote-label">AI Output Example</div>
+        <p>"Project is 11 days behind schedule. Main causes: late material delivery (4 days), low manpower in Week 3 (4 days), delayed approval of shop drawings (3 days). Current recovery plan reduces delay to 6 days if executed this week."</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Module C -->
+  <div class="module">
+    <div class="module-header">
+      <div class="module-letter">C</div>
+      <div>
+        <div class="module-title">Daily Site Report</div>
+        <div class="module-subtitle">Engineers submit from phone — AI checks every report automatically</div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="tracks-grid">
+        <div class="track-item">Manpower Count vs. Plan</div>
+        <div class="track-item">Work Completed Today</div>
+        <div class="track-item">Materials Delivered</div>
+        <div class="track-item">Equipment Used</div>
+        <div class="track-item">Site Photos (required)</div>
+        <div class="track-item">Problems Encountered</div>
+        <div class="track-item">Safety Issues</div>
+        <div class="track-item">Weather Conditions</div>
+        <div class="track-item">Tomorrow's Target</div>
+      </div>
+      <div class="ai-quote">
+        <div class="ai-quote-label">AI Output Example</div>
+        <p>"Today's manpower is 35% below the planned headcount. If this continues for 5 more days, the projected additional delay is 8–12 days. This is the third consecutive day with below-plan manpower — escalate to Project Manager."</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE 3: MORE MODULES
+════════════════════════════════════════ -->
+<div class="page page-break">
+
+  <!-- Module D -->
+  <div class="module">
+    <div class="module-header">
+      <div class="module-letter">D</div>
+      <div>
+        <div class="module-title">Procurement Monitoring</div>
+        <div class="module-subtitle">Purchase orders, suppliers, and delivery status tracking</div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="tracks-grid">
+        <div class="track-item">Material Requests</div>
+        <div class="track-item">Purchase Orders</div>
+        <div class="track-item">Supplier Details</div>
+        <div class="track-item">Expected Delivery Date</div>
+        <div class="track-item">Actual Delivery Date</div>
+        <div class="track-item">Delivery Status</div>
+        <div class="track-item">Late Delivery Flag</div>
+        <div class="track-item">Impact on Schedule</div>
+      </div>
+      <div class="ai-quote">
+        <div class="ai-quote-label">AI Output Example</div>
+        <p>"Gypsum board delivery is 4 days late. This material is needed for ceiling works starting Monday. If not delivered by Friday, expect an additional 5-day delay on milestone 3."</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Module E -->
+  <div class="module">
+    <div class="module-header">
+      <div class="module-letter">E</div>
+      <div>
+        <div class="module-title">CEO Remote Approval Center</div>
+        <div class="module-subtitle">Approve POs, billings, and change orders from your phone</div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="tracks-grid">
+        <div class="track-item">Purchase Order Approval</div>
+        <div class="track-item">Billing Approval</div>
+        <div class="track-item">Change Order Approval</div>
+        <div class="track-item">Overtime Approval</div>
+        <div class="track-item">Approval History Log</div>
+        <div class="track-item">Pending Approval Count</div>
+      </div>
+      <div class="ai-quote">
+        <div class="ai-quote-label">How It Works</div>
+        <p>When a PO or billing is submitted, the CEO receives an instant notification with full details. A single tap approves or rejects — no need to be on-site or in the office. All decisions are recorded with a timestamp.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Module F -->
+  <div class="module">
+    <div class="module-header">
+      <div class="module-letter">F</div>
+      <div>
+        <div class="module-title">CEO Morning Briefing</div>
+        <div class="module-subtitle">AI-generated daily summary delivered every morning</div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="tracks-grid">
+        <div class="track-item">All Projects Status Summary</div>
+        <div class="track-item">Top Risks Today</div>
+        <div class="track-item">Budget Status per Project</div>
+        <div class="track-item">Pending Approvals List</div>
+        <div class="track-item">Delayed Projects Flagged</div>
+        <div class="track-item">Recommended CEO Actions</div>
+      </div>
+      <div class="ai-quote">
+        <div class="ai-quote-label">AI Output Example</div>
+        <p>"Good morning. 5 of 6 projects are on track. Sta. Rosa is 8 days delayed — manpower issue. BGC Office has a budget risk (67% budget used, 51% complete). Action needed today: approve electrical PO ₱45,000 and review Sta. Rosa recovery plan."</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Module G -->
+  <div class="module">
+    <div class="module-header">
+      <div class="module-letter" style="background:var(--accent2);">G</div>
+      <div>
+        <div class="module-title">Auto-Generated Progress Report (PDF)</div>
+        <div class="module-subtitle">Professional weekly PDF report per project — send to clients or board</div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="tracks-grid">
+        <div class="track-item">Budget Summary (used vs. remaining)</div>
+        <div class="track-item">Schedule Status</div>
+        <div class="track-item">This Week's Work Summary</div>
+        <div class="track-item">Issues & Problems</div>
+        <div class="track-item">Site Photos</div>
+        <div class="track-item">AI Risk Summary</div>
+        <div class="track-item">Next Week's Plan</div>
+        <div class="track-item">Delays & Recovery Plan</div>
+      </div>
+      <div class="ai-quote">
+        <div class="ai-quote-label">How It Works</div>
+        <p>Every Sunday evening, the system automatically generates a PDF progress report for each active project. The CEO can send it directly to clients, investors, or the board — no manual preparation needed.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Module H -->
+  <div class="module">
+    <div class="module-header">
+      <div class="module-letter" style="background:var(--accent2);">H</div>
+      <div>
+        <div class="module-title">Gantt Chart / Project Timeline</div>
+        <div class="module-subtitle">Visual milestone timeline embedded in the CEO dashboard</div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="tracks-grid">
+        <div class="track-item">All milestones per project</div>
+        <div class="track-item">Planned vs. actual timeline</div>
+        <div class="track-item">Completion % per phase</div>
+        <div class="track-item">Delayed phases highlighted</div>
+        <div class="track-item">Color-coded status bars</div>
+        <div class="track-item">Updates in real time</div>
+      </div>
+      <div class="ai-quote">
+        <div class="ai-quote-label">How It Works</div>
+        <p>Engineers update milestone completion percentages in their daily reports. The Gantt chart updates automatically — the CEO always sees the current state of every project timeline without asking anyone.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE 4: HOW IT WORKS + DASHBOARD
+════════════════════════════════════════ -->
+<div class="page page-break">
+  <div class="section-label">System Flow</div>
+  <h2>How It Works</h2>
+  <div class="divider"></div>
+
+  <div class="flow-row">
+    <div class="flow-step">Engineer<br/>Submits<span>Phone form daily</span></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Data Saved<br/>to Database<span>Airtable</span></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">AI Analyzes<br/>the Report<span>Claude AI</span></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Dashboard<br/>Updates<span>Green/Yellow/Red</span></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">CEO Gets<br/>Alert/Briefing<span>Phone notification</span></div>
+  </div>
+
+  <p style="font-size:13px; color:var(--muted); margin-bottom: 32px;">The AI checks every report against the project schedule, budget, planned manpower, and procurement data. It does not rely only on what the engineer writes — it compares claims against numbers and flags inconsistencies.</p>
+
+  <div class="section-label">CEO Dashboard</div>
+  <h2>What You See Every Morning</h2>
+  <div class="divider"></div>
+
+  <div class="dashboard-preview">
+    <div class="dp-title">TRI V DEVELOPMENT — COMMAND CENTER</div>
+    <div class="dp-row">
+      <div class="dp-card blue"><div class="dp-card-num">6</div><div class="dp-card-label">ACTIVE PROJECTS</div></div>
+      <div class="dp-card red"><div class="dp-card-num">1</div><div class="dp-card-label">DELAYED</div></div>
+      <div class="dp-card yellow"><div class="dp-card-num">1</div><div class="dp-card-label">BUDGET RISK</div></div>
+      <div class="dp-card green"><div class="dp-card-num">3</div><div class="dp-card-label">PENDING APPROVALS</div></div>
+    </div>
+    <div class="dp-ai">
+      <div class="dp-ai-label">⚡ AI MORNING BRIEF — June 7, 2026</div>
+      <p>5 of 6 projects on track. Sta. Rosa is 8 days delayed (manpower issue, 3rd day). BGC Office has budget risk — 67% used vs 51% complete. Action needed: approve electrical PO before 12PM and review Sta. Rosa recovery plan.</p>
+    </div>
+    <div class="dp-list">
+      <div class="dp-list-title">All Projects</div>
+      <div class="dp-item"><span>🟢</span> Makati Condo — 68% complete · On track · Budget OK</div>
+      <div class="dp-item"><span>🔴</span> Sta. Rosa House — 52% complete · 8 days delayed · Manpower low</div>
+      <div class="dp-item"><span>🟡</span> BGC Office — 51% complete · Budget risk · ₱380K overrun projected</div>
+      <div class="dp-item"><span>🟢</span> QC Townhouse — 40% complete · On track · No issues</div>
+      <div class="dp-item"><span>🟢</span> Alabang Duplex — 75% complete · On track · Final phase</div>
+      <div class="dp-item"><span>🟢</span> Pasig Warehouse — 22% complete · On track · New project</div>
+    </div>
+  </div>
+
+  <p style="font-size:12px; color:var(--muted); margin-top:10px;">The dashboard is accessible from any device — laptop, tablet, or phone — via a secure web link. Each engineer and project manager has their own login and only sees their assigned projects.</p>
+
+  <div style="margin-top:36px;">
+    <div class="section-label">Role-Based Access</div>
+    <h2>Who Sees What</h2>
+    <div class="divider"></div>
+    <div style="display:grid; grid-template-columns: repeat(3,1fr); gap:12px; margin-top:8px;">
+      <div style="background:var(--light); border-radius:8px; padding:16px; border-top:3px solid var(--primary);">
+        <div style="font-weight:700; color:var(--primary); margin-bottom:8px;">CEO / Owner</div>
+        <div style="font-size:12px; color:#374151; line-height:1.7;">All projects · AI briefing · Approvals · Cost & schedule · Progress reports · Gantt charts</div>
+      </div>
+      <div style="background:var(--light); border-radius:8px; padding:16px; border-top:3px solid var(--accent);">
+        <div style="font-weight:700; color:var(--primary); margin-bottom:8px;">Project Manager</div>
+        <div style="font-size:12px; color:#374151; line-height:1.7;">Assigned projects · Site reports · Procurement · Schedule · Team reports · Submit approvals</div>
+      </div>
+      <div style="background:var(--light); border-radius:8px; padding:16px; border-top:3px solid var(--accent2);">
+        <div style="font-weight:700; color:var(--primary); margin-bottom:8px;">Site Engineer</div>
+        <div style="font-size:12px; color:#374151; line-height:1.7;">Own project only · Submit daily report · Upload photos · View own milestones</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE 5: TIMELINE + TOOLS COST
+════════════════════════════════════════ -->
+<div class="page page-break">
+  <div class="section-label">Project Timeline</div>
+  <h2>Build Schedule — 5 Weeks</h2>
+  <div class="divider"></div>
+
+  <div class="timeline">
+    <div class="timeline-row">
+      <div class="tl-week">Week 1</div>
+      <div class="tl-bar"><strong>Database Setup</strong> — Build all Airtable tables, define project structure, set up engineer input forms (Tally.so)</div>
+    </div>
+    <div class="timeline-row">
+      <div class="tl-week">Week 2</div>
+      <div class="tl-bar accent"><strong>AI Workflows</strong> — Build n8n automations: daily report processing, cost overrun alert, morning CEO briefing</div>
+    </div>
+    <div class="timeline-row">
+      <div class="tl-week">Week 3</div>
+      <div class="tl-bar accent"><strong>CEO Dashboard</strong> — Build Softr web dashboard, role-based login, project status pages, Gantt chart embed</div>
+    </div>
+    <div class="timeline-row">
+      <div class="tl-week">Week 4</div>
+      <div class="tl-bar"><strong>Reports + Approvals</strong> — Auto-generated weekly PDF progress report, CEO approval workflow via phone notification</div>
+    </div>
+    <div class="timeline-row">
+      <div class="tl-week">Week 5</div>
+      <div class="tl-bar green"><strong>Testing & Launch</strong> — Full end-to-end testing with real project data, team training, system go-live</div>
+    </div>
+  </div>
+
+  <div style="margin-top:44px;">
+    <div class="section-label">Tools Investment</div>
+    <h2>Monthly Software Costs</h2>
+    <div class="divider"></div>
+    <p class="section-intro" style="margin-bottom:20px;">These are the third-party tools required to run the system. All prices are in USD per month. No hidden fees — Tri V subscribes directly.</p>
+
+    <table class="tools-table">
+      <thead>
+        <tr>
+          <th>Tool</th>
+          <th>Purpose</th>
+          <th>Plan</th>
+          <th>Monthly Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Airtable</strong></td>
+          <td>Project database — all project data, costs, reports, procurement</td>
+          <td>Free to start → Plus when needed</td>
+          <td class="free">Free / $20/user</td>
+        </tr>
+        <tr>
+          <td><strong>Softr.io</strong></td>
+          <td>CEO web dashboard — the website Marvin logs into</td>
+          <td>Starter Plan</td>
+          <td class="paid">$49/month</td>
+        </tr>
+        <tr>
+          <td><strong>Tally.so</strong></td>
+          <td>Engineer daily report form — submitted from phone</td>
+          <td>Free Plan</td>
+          <td class="free">Free</td>
+        </tr>
+        <tr>
+          <td><strong>Claude AI API</strong></td>
+          <td>AI brain — daily briefings, cost alerts, delay predictions, report analysis</td>
+          <td>Pay as you use</td>
+          <td class="paid">~$15–25/month</td>
+        </tr>
+        <tr>
+          <td><strong>Google Drive</strong></td>
+          <td>Site photo storage — engineers upload from phone</td>
+          <td>Free / existing account</td>
+          <td class="free">Free</td>
+        </tr>
+        <tr>
+          <td><strong>n8n (automation)</strong></td>
+          <td>Connects all tools, runs AI workflows, sends reports and alerts</td>
+          <td>Included in setup</td>
+          <td class="free">Included</td>
+        </tr>
+        <tr class="total-row">
+          <td colspan="3"><strong>Estimated Monthly Total (after free tier)</strong></td>
+          <td><strong>~$65–75/month</strong><br/><span style="font-weight:400; font-size:11px;">≈ ₱3,700–4,300/month at current rate</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note-box">
+      <strong>Note:</strong> The system can launch using free tiers of Airtable and Softr for the first 30 days at near-zero cost. Paid plans are only needed when the team count or data volume grows beyond the free limits. Monthly costs will be confirmed before launch.
+    </div>
+  </div>
+
+  <div style="margin-top:40px;">
+    <div class="section-label">Service Investment</div>
+    <h2>Build & Maintenance</h2>
+    <div class="divider"></div>
+
+    <div class="service-box">
+      <div class="service-item">
+        <div class="service-item-name">
+          <strong>Phase 1 — Full System Build</strong><br/>
+          <span style="font-size:12px; color:var(--muted);">All 8 modules · Dashboard · AI workflows · PDF reports · Gantt chart · Training</span>
+        </div>
+        <div class="service-item-price tbd">TO BE DISCUSSED</div>
+      </div>
+      <div class="service-item">
+        <div class="service-item-name">
+          <strong>Monthly Maintenance & Support</strong><br/>
+          <span style="font-size:12px; color:var(--muted);">AI monitoring · System updates · New module additions · Technical support</span>
+        </div>
+        <div class="service-item-price tbd">TO BE DISCUSSED</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE 6: NEXT STEPS
+════════════════════════════════════════ -->
+<div class="page page-break">
+  <div class="section-label">Getting Started</div>
+  <h2>Next Steps</h2>
+  <div class="divider"></div>
+  <p class="section-intro">The fastest path to a working system is to start with one active project, build the MVP in 5 weeks, validate with the team, and expand from there.</p>
+
+  <div class="steps-list">
+    <div class="step-row">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Alignment Meeting</h4>
+        <p>Confirm scope, select the first pilot project, define user roles (CEO, PM, engineers), and agree on timeline and investment. Estimated 1–2 hours.</p>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Data Collection</h4>
+        <p>Provide one active project's data: budget breakdown, schedule/milestones, current completion %, and list of engineers. This becomes the seed data for the system.</p>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Build Phase (5 Weeks)</h4>
+        <p>Database setup, AI workflows, CEO dashboard, PDF reports, and approval system are built in sequence. Weekly progress updates are provided throughout the build.</p>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Team Training & Go-Live</h4>
+        <p>Brief training session for engineers (how to submit daily reports) and project managers. CEO dashboard walkthrough. System goes live on one pilot project.</p>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <h4>Expand to All Projects</h4>
+        <p>Once the pilot runs smoothly for 2–4 weeks, remaining active projects are added to the system. Full monitoring begins across the entire portfolio.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background: linear-gradient(135deg, #0f2744, #1a3a5c); border-radius:12px; padding:32px 36px; margin-top:36px; color:#fff;">
+    <div style="font-size:11px; font-weight:700; letter-spacing:2px; color:var(--accent); text-transform:uppercase; margin-bottom:10px;">Why Build This Now</div>
+    <p style="font-size:15px; font-weight:600; line-height:1.6; margin-bottom:12px;">Construction projects don't fail because engineers are bad. They fail because problems are caught too late.</p>
+    <p style="font-size:13px; color:rgba(255,255,255,0.75); line-height:1.7;">This system gives you visibility into every project, every day — without needing to be on-site. The AI acts as your eyes and ears, checking every report and alerting you to risks before they become losses. Built specifically for how Tri V operates today, not a generic software package.</p>
+  </div>
+
+  <div style="margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border);">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div>
+        <div style="font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">Prepared by</div>
+        <div style="font-size:18px; font-weight:800; color:var(--primary);">Vladimir Napigkit</div>
+        <div style="font-size:13px; color:var(--muted);">IT Architect · AI Automation Specialist</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">Date Prepared</div>
+        <div style="font-size:15px; font-weight:700; color:var(--primary);">June 7, 2026</div>
+        <div style="font-size:12px; color:var(--muted);">Valid for 30 days</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <strong>Tri V AI Construction Command Center</strong> · Prepared for Marvin Bryan K. Verar · Tri V Development Corporation · Manila<br/>
+  Prepared by Vladimir Napigkit — IT Architect & AI Automation Specialist · June 2026
+</div>
+
+</body>
+</html>
