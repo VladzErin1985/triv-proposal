@@ -674,7 +674,7 @@
       <div class="module-letter">C</div>
       <div>
         <div class="module-title">Daily Site Report</div>
-        <div class="module-subtitle">Engineers submit from phone — AI checks every report automatically</div>
+        <div class="module-subtitle">Engineers submit from phone or laptop — photos auto-compressed, AI checks every report automatically</div>
       </div>
     </div>
     <div class="module-body">
@@ -683,7 +683,7 @@
         <div class="track-item">Work Completed Today</div>
         <div class="track-item">Materials Delivered</div>
         <div class="track-item">Equipment Used</div>
-        <div class="track-item">Site Photos (required)</div>
+        <div class="track-item">Site Photos — mobile camera or laptop upload (auto-compressed)</div>
         <div class="track-item">Problems Encountered</div>
         <div class="track-item">Safety Issues</div>
         <div class="track-item">Weather Conditions</div>
@@ -842,15 +842,22 @@
   <div class="divider"></div>
 
   <div class="flow-row">
-    <div class="flow-step">Engineer<br/>Submits<span>Phone form daily</span></div>
+    <div class="flow-step">Engineer<br/>Submits<span>Phone or laptop</span></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Photos<br/>Auto-Saved<span>Google Drive</span></div>
     <div class="flow-arrow">→</div>
     <div class="flow-step">Data Saved<br/>to Database<span>Airtable</span></div>
     <div class="flow-arrow">→</div>
     <div class="flow-step">AI Analyzes<br/>the Report<span>Claude AI</span></div>
     <div class="flow-arrow">→</div>
-    <div class="flow-step">Dashboard<br/>Updates<span>Green/Yellow/Red</span></div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-step">CEO Gets<br/>Alert/Briefing<span>Phone notification</span></div>
+    <div class="flow-step">CEO Gets<br/>Alert/Briefing<span>Dashboard + Phone</span></div>
+  </div>
+
+  <div style="background:var(--light); border-radius:8px; padding:16px 20px; margin-bottom:24px; border-left:3px solid var(--accent2); font-size:13px; color:#374151;">
+    <strong style="color:var(--primary);">Photo Upload — Works Two Ways:</strong><br/>
+    <span style="display:block; margin-top:6px;">📱 <strong>Mobile (on site):</strong> Engineer opens AppSheet → taps camera icon → takes photo directly → auto-compressed → saves to Google Drive automatically</span>
+    <span style="display:block; margin-top:6px;">💻 <strong>Laptop (site office):</strong> Engineer opens AppSheet in browser → uploads photos from Google Drive folder or laptop → submits report</span>
+    <span style="display:block; margin-top:6px; color:var(--muted);">Both routes save to the same Google Drive project folder. CEO sees all photos in one place.</span>
   </div>
 
   <p style="font-size:13px; color:var(--muted); margin-bottom: 32px;">The AI checks every report against the project schedule, budget, planned manpower, and procurement data. It does not rely only on what the engineer writes — it compares claims against numbers and flags inconsistencies.</p>
@@ -916,7 +923,7 @@
   <div class="timeline">
     <div class="timeline-row">
       <div class="tl-week">Week 1</div>
-      <div class="tl-bar"><strong>Database Setup</strong> — Build all Airtable tables, define project structure, set up engineer input forms (Tally.so)</div>
+      <div class="tl-bar"><strong>Database Setup</strong> — Build all Airtable tables, define project structure, set up AppSheet engineer forms (mobile + laptop)</div>
     </div>
     <div class="timeline-row">
       <div class="tl-week">Week 2</div>
@@ -965,9 +972,9 @@
           <td class="paid">$49/month</td>
         </tr>
         <tr>
-          <td><strong>Tally.so</strong></td>
-          <td>Engineer daily report form — submitted from phone</td>
-          <td>Free Plan</td>
+          <td><strong>AppSheet</strong> (by Google)</td>
+          <td>Engineer daily report — mobile camera capture + laptop Google Drive upload, auto photo compression</td>
+          <td>Free Plan (up to 10 users)</td>
           <td class="free">Free</td>
         </tr>
         <tr>
